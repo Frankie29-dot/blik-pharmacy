@@ -1,0 +1,10 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30
+SQLAlchemy>=2.0,<2.1
+alembic>=1.13
+psycopg[binary]>=3.1
+pydantic>=2.6
+pydantic-settings>=2.2
+passlib[argon2]>=1.7.4
+PyJWT>=2.8
+python-multipart>=0.0.9

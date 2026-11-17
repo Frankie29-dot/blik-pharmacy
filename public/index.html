@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Blik Pharmacy</title>
+<meta name="blik-api-url" content="http://127.0.0.1:8000">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#F5F9F7; --surface:#FFFFFF; --ink:#12332E; --muted:#4F6B65; --line:#D4E2DD;
+  --brand:#1B6B52; --brand-ink:#FFFFFF; --alert:#C8402F; --tint:#E3F1EB;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1C19; --surface:#152724; --ink:#E6F2EE; --muted:#9BB5AD; --line:#27403A;
+    --brand:#4FC29A; --brand-ink:#08211A; --alert:#FF8A78; --tint:#1B332E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1C19; --surface:#152724; --ink:#E6F2EE; --muted:#9BB5AD; --line:#27403A;
+  --brand:#4FC29A; --brand-ink:#08211A; --alert:#FF8A78; --tint:#1B332E; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Figtree,system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:12px}
+.logo{font:700 20px "Bricolage Grotesque",Figtree,sans-serif;text-decoration:none}
+.call{background:var(--brand);color:var(--brand-ink);padding:9px 16px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px}
+.hero{display:grid;gap:28px;padding:20px 0 40px}
+@media(min-width:760px){.hero{grid-template-columns:1.1fr 1fr;align-items:center;padding:48px 0 56px}}
+h1{font-size:clamp(34px,7vw,56px);font-weight:700;letter-spacing:-.02em}
+.lead{color:var(--muted);max-width:44ch;margin:14px 0 0;font-size:18px}
+.status{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin-top:18px;background:var(--tint);padding:6px 12px;border-radius:999px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--brand)}
+.status.closed .dot{background:var(--alert)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.card h2{font-size:24px;margin-bottom:4px}
+.card p.sub{margin:0 0 16px;color:var(--muted);font-size:15px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 5px}
+input,select{width:100%;font:inherit;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg label{margin:0;font-weight:500;border:1px solid var(--line);border-radius:10px;padding:11px;display:flex;gap:8px;align-items:center;cursor:pointer}
+.seg input{width:auto}
+button{font:600 16px Figtree,sans-serif;width:100%;margin-top:18px;padding:14px;border:0;border-radius:10px;background:var(--brand);color:var(--brand-ink);cursor:pointer}
+#msg{margin-top:14px;font-weight:600;color:var(--brand)}
+#msg.err{color:var(--alert)}
+section{padding:36px 0;border-top:1px solid var(--line)}
+section>h2{font-size:28px;margin-bottom:18px}
+.cats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.cats a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);text-decoration:none;font-weight:600}
+.cats a small{display:block;font-weight:400;color:var(--muted)}
+.cats a:hover{border-color:var(--brand)}
+.tools{display:flex;gap:10px;align-items:center;margin-bottom:16px}.tools select{max-width:260px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.p{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:4px}
+.p small{color:var(--muted)}.p b{font-size:18px;margin-top:6px}
+.p a{margin-top:10px;text-align:center;padding:10px;border-radius:10px;background:var(--tint);text-decoration:none;font-weight:600}
+.p img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;background:var(--tint);margin-bottom:6px}
+.note{color:var(--muted);font-size:14px;margin:14px 0 0}
+.svc{display:grid;gap:18px}
+@media(min-width:700px){.svc{grid-template-columns:repeat(3,1fr)}}
+.svc h3{font-size:19px;margin-bottom:4px}
+.svc p{margin:0;color:var(--muted)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;max-width:420px}
+td{padding:7px 0;border-bottom:1px solid var(--line)}
+td:last-child{text-align:right;color:var(--muted)}
+tr.today td{font-weight:600;color:var(--ink)}
+.info{display:grid;gap:28px}
+@media(min-width:700px){.info{grid-template-columns:1fr 1fr}}
+footer{padding:28px 0 36px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" href="#top">Blik Pharmacy</a>
+    <a class="call" href="tel:+2349033099619">Call +234 903 309 9619</a>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div>
+        <h1>Your prescription, ready when you are.</h1>
+        <p class="lead">Refill online in under a minute. Pick up in store or have it delivered to your door.</p>
+        <div class="status" id="status"><span class="dot"></span><span id="statusText">Checking hours…</span></div>
+      </div>
+
+      <div class="card">
+        <h2>Refill a prescription</h2>
+        <p class="sub">We'll text you when it's ready.</p>
+        <div id="form">
+          <label for="rx">Prescription number</label>
+          <input id="rx" inputmode="numeric" autocomplete="off" placeholder="Found on your bottle label">
+          <label for="dob">Date of birth</label>
+          <input id="dob" type="date">
+          <label for="ph">Mobile number</label>
+          <input id="ph" type="tel" autocomplete="tel" placeholder="e.g. 0803 000 0000">
+          <label>How would you like to get it?</label>
+          <div class="seg">
+            <label><input type="radio" name="m" value="pickup" checked> Pick up</label>
+            <label><input type="radio" name="m" value="delivery"> Delivery</label>
+          </div>
+          <button id="go" type="button">Request refill</button>
+          <div id="msg" role="status"></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="shop">
+      <h2>Shop the pharmacy</h2>
+      <div class="tools"><label for="cat" style="margin:0">Category</label><select id="cat"></select></div>
+      <div class="grid" id="grid"></div>
+      <p class="note">Prices and stock can change, so message us to confirm before you come. Prescription medicines are not sold online.</p>
+    </section>
+
+    <section id="services">
+      <h2>Services</h2>
+      <div class="svc">
+        <div><h3>Vaccinations</h3><p>Flu, shingles, travel and routine shots. Walk-ins welcome.</p></div>
+        <div><h3>Medication review</h3><p>Sit down with a pharmacist to check interactions and simplify your routine.</p></div>
+        <div><h3>Free delivery</h3><p>Same-day delivery within 10 miles on orders placed before 2 pm.</p></div>
+      </div>
+    </section>
+
+    <section id="visit">
+      <div class="info">
+        <div>
+          <h2>Hours</h2>
+          <div class="tw"><table id="hours"></table></div>
+        </div>
+        <div>
+          <h2>Visit us</h2>
+          <p>No 1 Hector Peppe Street<br>Iboloji Estate<br>Port Harcourt<br><a href="tel:+2349033099619">+234 903 309 9619</a></p>
+          <p style="color:var(--muted)">Drive-through pickup is open during all pharmacy hours.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>&copy; 2026 Blik Pharmacy.</footer>
+</div>
+
+<script>
+var H=[[14.5,21],[7.5,21.5],[7.5,21.5],[7.5,21.5],[7.5,21.5],[7.5,21.5],[7.5,21.5]];
+var D=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function f(h){var s=h<12?"am":"pm",m=Math.round((h%1)*60),hh=Math.floor(h);return (hh%12||12)+(m?":"+(m<10?"0"+m:m):"")+" "+s}
+var now=new Date(),d=now.getDay(),t=now.getHours()+now.getMinutes()/60;
+var tb=document.getElementById("hours");
+for(var i=0;i<7;i++){
+  var r=document.createElement("tr");if(i===d)r.className="today";
+  r.innerHTML="<td>"+D[i]+"</td><td>"+(H[i][0]===null?"Closed":f(H[i][0])+" – "+f(H[i][1]))+"</td>";
+  tb.appendChild(r);
+}
+var o=H[d][0]!==null&&t>=H[d][0]&&t<H[d][1],st=document.getElementById("status");
+document.getElementById("statusText").textContent=o?"Open now, closes at "+f(H[d][1]):"Closed now";
+if(!o)st.className="status closed";
+var P=[["Paracetamol 500mg, 16 tablets","Pain relief",500,"images/paracetamol.png"],["ibuprofen, 400mg","Pain relief",700,"images/ibuprofen.png"],["Cough syrup, 100ml","Cold and flu",2200,"images/cough_syrup.png"],["Vitamin C 1000mg","Vitamins",20000,"images/vitamin_c.png"],["Adhesive plasters, 20 pack","First aid",800],["Sunscreen SPF 50, 100ml","Skin care",6500],["Baby wipes, 80 pack","Baby and family",1800]];
+var sel=document.getElementById("cat"),cl=["All"];
+P.forEach(function(p){if(cl.indexOf(p[1])<0)cl.push(p[1])});
+cl.forEach(function(c){var o=document.createElement("option");o.textContent=c;sel.appendChild(o)});
+function show(){
+  var g=document.getElementById("grid");g.innerHTML="";
+  P.forEach(function(p){
+    if(sel.value!=="All"&&p[1]!==sel.value)return;
+    var d=document.createElement("div");d.className="p";
+    d.innerHTML="<small>"+p[1]+"</small><span>"+p[0]+"</span><b>\u20A6"+p[2].toLocaleString("en-NG")+"</b>";
+    var a=document.createElement("a");
+    a.href="https://wa.me/2349033099619?text="+encodeURIComponent("Hello Blik Pharmacy, is "+p[0]+" available?");
+    if(p[3]){var im=document.createElement("img");im.src=p[3];im.alt=p[0];im.loading="lazy";d.insertBefore(im,d.firstChild);}
+    a.target="_blank";a.rel="noopener";a.textContent="Ask on WhatsApp";
+    d.appendChild(a);g.appendChild(d);
+  });
+}
+sel.onchange=show;show();
+var msg=document.getElementById("msg");
+var apiUrl=(document.querySelector('meta[name="blik-api-url"]').content||"").replace(/\/$/,"");
+document.getElementById("go").onclick=async function(){
+  var button=document.getElementById("go"),
+      rx=document.getElementById("rx").value.trim(),
+      dob=document.getElementById("dob").value,
+      ph=document.getElementById("ph").value.trim();
+  msg.className="";
+  if(!/^[A-Za-z0-9][A-Za-z0-9/-]*$/.test(rx)||rx.length<3){msg.className="err";msg.textContent="Enter a valid prescription number from your bottle label.";return}
+  if(!dob){msg.className="err";msg.textContent="Enter your date of birth.";return}
+  if(ph.replace(/\D/g,"").length<10){msg.className="err";msg.textContent="Enter a valid Nigerian mobile number.";return}
+  var m=document.querySelector('input[name=m]:checked').value;
+  button.disabled=true;button.textContent="Sending…";msg.textContent="";
+  try{
+    var response=await fetch(apiUrl+"/refills",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      prescription_number:rx,date_of_birth:dob,phone:ph,method:m
+    })});
+    var data=await response.json().catch(function(){return {}});
+    if(!response.ok){
+      var detail=Array.isArray(data.detail)?data.detail.map(function(e){return e.msg}).join(" "):data.detail;
+      throw new Error(detail||"We couldn't submit your request. Please try again.");
+    }
+    msg.textContent=data.message||"Refill requested successfully.";
+    document.getElementById("rx").value="";
+    document.getElementById("dob").value="";
+    document.getElementById("ph").value="";
+  }catch(error){
+    msg.className="err";
+    msg.textContent=error instanceof TypeError?"We couldn't reach the pharmacy. Please try again later.":error.message;
+  }finally{
+    button.disabled=false;button.textContent="Request refill";
+  }
+};
+</script>
+</body>
+</html>
