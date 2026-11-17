@@ -8,6 +8,15 @@ from app.routers import auth, refills
 
 app = FastAPI(title="Blik Pharmacy API", version="0.1.0")
 
+
+@app.get("/", tags=["meta"])
+def root() -> dict[str, str]:
+    return {
+        "service": "Blik Pharmacy API",
+        "health": "/health",
+        "docs": "/docs",
+    }
+
 # Only the pharmacy's own website may call this API from a browser.
 app.add_middleware(
     CORSMiddleware,

@@ -73,6 +73,14 @@ Run the migration once against Neon before starting the deployed API. Set the sa
 environment variables in your hosting provider; never upload `.env` or put the Neon
 password in frontend code.
 
+### Deploy the API to Vercel
+
+Create a separate Vercel project from this repository and set its **Root Directory**
+to `blik-backend`. Let Vercel detect the FastAPI app; leave the build command and
+output directory unset. Add `DATABASE_URL`, `SECRET_KEY`, and `CORS_ORIGINS` in the
+Vercel project's environment variables before deploying. Do not use the repository
+root's `vercel.json` for this project; it configures the static website.
+
 The frontend API URL is configured in the `blik-api-url` meta tag in
 `public/index.html`. Set it to the deployed API origin, for example
 `https://api.your-site.example`, before publishing the website. The API must include
